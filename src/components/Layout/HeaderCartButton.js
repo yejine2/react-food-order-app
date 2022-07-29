@@ -3,8 +3,8 @@ import classes from './HeaderCartButton.module.css'
 
 const HeaderCartButton = props => {
   return (
-    <button class={classes.button}>
-      <span class={classes.icon}>
+    <button className={classes.button}>
+      <span className={classes.icon}>
         <CartIcon />
       </span>
       <span>Your Cart</span>

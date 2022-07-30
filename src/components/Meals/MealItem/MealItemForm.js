@@ -21,6 +21,9 @@ const MealItemForm = (props) => {
       setAmountIsValid(false);
       return;
     }
+
+    // MealItem에서 장바구니 항목 추가를 위한 프롭 가져오기
+    props.onAddToCart(enteredAmountNumber);
   };
 
   return (

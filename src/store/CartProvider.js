@@ -10,9 +10,32 @@ const defaultCartState = {
 // 장바구니 데이터 상태 관리
 const cartReducer = (state, action) => {
   if (action.type === "ADD") {
-    const updatedItems = state.items.concat(action.item);
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
+
+    // 메뉴가 이미 장바구니에 들어있는지 확인
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+
+    // 해당 항목이 존재 하는 경우에만 작동, 없다면 null 반환
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+
+    // 장바구니 항목 존재 여부 조건문
+    if (existingCartItem) {
+      const updatedItem = {
+        // existingCartItem를 복사해서 수량 업데이트
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+      // 수량이 업데이트 되었다면 이전 객체를 복사하는 새 배열로 만들어준다.
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      updatedItems = state.items.concat(action.item);
+    }
+
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
